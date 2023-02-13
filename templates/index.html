@@ -31,7 +31,6 @@
               <div class="flex mb-4 items-center">
                 <p class="w-full text-grey-darkest  {{'line-through' if todo.complete else ''}}">{{ todo.text }}</p>
                  <a href="{{ url_for('complete', id=todo.id) }}"  class="flex-no-shrink btn  btn-sm {{ 'btn-secondary' if todo.complete else 'btn-primary' }}">{{ 'Deshacer' if todo.complete else 'Hecho' }}</a>
-                 <a href="{{ url_for('delete', id=todo.id) }}"  class="flex-no-shrink btn btn-sm btn-secondary">Borrar</a>
              </div>
              {% endfor %}
 
