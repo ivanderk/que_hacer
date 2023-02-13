@@ -13,10 +13,6 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
 
 
-app.app_context().push()
-db.create_all()
-
-
 @app.route('/')
 def index():
     todos = Todo.query.all()
@@ -31,6 +27,10 @@ def add():
     return redirect(url_for('index'))
 
 
+app.app_context().push()
+db.create_all()
+
+
 @app.route('/complete/<id>')
 def complete(id):
     todo = Todo.query.filter_by(id=int(id)).first()
@@ -39,6 +39,13 @@ def complete(id):
     return redirect(url_for('index'))
 
 
+@app.route('/delete/<id>')
+def delete(id):
+    todo = Todo.query.filter_by(id=int(id)).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect(url_for('index'))
+
+
 if __name__ == '__main__':
-    db.create_all()
     app.run(debug=True)
