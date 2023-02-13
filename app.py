@@ -13,6 +13,10 @@ class Todo(db.Model):
     complete = db.Column(db.Boolean)
 
 
+app.app_context().push()
+db.create_all()
+
+
 @app.route('/')
 def index():
     todos = Todo.query.all()
@@ -25,10 +29,6 @@ def add():
     db.session.add(todo)
     db.session.commit()
     return redirect(url_for('index'))
-
-
-app.app_context().push()
-db.create_all()
 
 
 @app.route('/complete/<id>')

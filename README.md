@@ -1,4 +1,4 @@
-# Vein
+# Que_hacer
 
 Que_hacer is a Python web app (built on [Flask](https://flask.palletsprojects.com/)) implementing a simple Todo app for Flask & SQLAlchemy in Python using Poetry.  Que_hacer serves as a simple demo and playground for [Flask](https://flask.palletsprojects.com/), [Htmx](https://htmx.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
