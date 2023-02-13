@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "que-hacer"
+version = "0.1.0"
+description = "Simple TODO app (demontrator for teaching purposes)"
+authors = ["Iwan van der Kleijn <iwan-rochus.van-der-kleijn@capgemini.com>"]
+readme = "README.md"
+packages = [{include = "que_hacer"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^2.2.2"
+flask-sqlalchemy = "^3.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
