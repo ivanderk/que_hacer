@@ -1,28 +1,28 @@
 from dataclasses import dataclass
 
-def person(nombre, appelidos, edad):
-    return {"nombre": nombre, "appelidos":appelidos, "edad": edad}
+def get_person(nombre, apellidos, edad):
+    return {"nombre": nombre, "apellidos":apellidos, "edad": edad}
 
-person = person("Patricio", "Estrella Del Mar", 4)
-print(f"Person: {person['nombre']} {person['appelidos']}")
+person = get_person("Bob", "Sponga", 4)
+print(f"Person: {person['nombre']} {person['apellidos']}")
 
 #class Person():
-#   def __init__(self, nombre, appelidos, edad):
+#   def __init__(self, nombre, apellidos, edad):
 #       self.nombre = nombre
-#       self.appelidos = appelidos
+#       self.apellidos = apellidos
 #       self.edad = edad
 
 @dataclass
 class Person:
     nombre: str
-    appelidos: str
+    apellidos: str
     edad: int
 
     def identify(self):
-        return f"Person: {person.nombre} {person.appelidos}"
+        return f"Person: {self.nombre} {self.apellidos}"
 
 person2 = Person("Patricio", "Estrella Del Mar", 4)
-print(f"Person: {person2.nombre} {person2.appelidos}")
+print(f"Person: {person2.nombre} {person2.apellidos}")
 print(person2.identify())
 
 
