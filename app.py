@@ -31,6 +31,13 @@ def add():
     return redirect(url_for('index'))
 
 
+@app.route('/delete/<id>', methods=['POST'])
+def delete(id):
+    todo = Todo.query.filter_by(id=int(id)).first()
+    db.session.delete(todo)
+    db.session.commit()
+    return redirect(url_for('index'))
+
 @app.route('/complete/<id>')
 def complete(id):
     todo = Todo.query.filter_by(id=int(id)).first()
