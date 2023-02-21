@@ -10,6 +10,7 @@ packages = [{include = "que_hacer"}]
 python = "^3.10"
 flask = "^2.2.2"
 flask-sqlalchemy = "^3.0.3"
+icalendar = "^5.0.4"
 
 
 [build-system]
