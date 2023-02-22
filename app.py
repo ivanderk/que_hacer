@@ -11,6 +11,10 @@ db = init_app(app)
 app.app_context().push()
 db.create_all()
 
+# id name
+# 1 John
+# 2 Jane
+active_user_id = 1 
 
 @app.route('/')
 def index():
@@ -20,7 +24,7 @@ def index():
 
 @app.route('/add', methods=['POST'])
 def add():
-    task = Task(name=request.form['task_name'], description=request.form['task_name'],complete=False)
+    task = Task(name=request.form['task_name'], description=request.form['task_name'], complete=False)
     db.session.add(task)
     db.session.commit()
     return redirect(url_for('index'))
@@ -28,7 +32,7 @@ def add():
 @app.route('/complete/<id>')
 def complete(id):
     task = Task.query.filter_by(id=int(id)).first()
-    task.complete = not task.complete
+    task.complete = not todo.complete
     db.session.commit()
     return redirect(url_for('index'))
 

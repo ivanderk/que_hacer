@@ -16,8 +16,19 @@
 <div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
 	<div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
         <div class="mb-4 ">
-            <h1 class="text-grey-darkest">¿Que hacer?</h1>
+            <h1 class="text-grey-darkest">Que hacer?</h1>
             <div class="flex mt-4">
+            
+                <form hx-get="/tasks" hx-trigger="change" hx-target="#tasks-container">
+                  <div class="form-group">
+                    <label for="project-select">Elegir proyecto:</label>
+                    <select id="project-select" name="project_id" class="select select-bordered w-full max-w-xs">
+                      {% for project in projects %}
+                      <option value="{{ project.id }}">{{ project.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+
                 <form action="{{ url_for('add') }}" method="post" >
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" name="task_name" placeholder="Añadir Tarea">
                     <textarea name="task_description" placeholder="descripcion tarea" class="textarea textarea-bordered textarea-md w-full max-w-xs" ></textarea>
@@ -26,18 +37,9 @@
             </div>
         </div>
 
-        <div>
+        <div id="tasks-container">
 
-            {% for task in tasks %}
-              <div class="flex mb-4 items-center">
-                <p class="w-full text-grey-darkest  {{'line-through' if task.complete else ''}}">{{ task.name }}</p>
-                <a href="{{ url_for('complete', id=task.id) }}"  class="flex-no-shrink btn  btn-sm {{ 'btn-secondary' if task.complete else 'btn-primary' }}">{{ 'Deshacer' if task.complete else 'Hecho' }}</a>
-                <form action="{{ url_for('delete') }}" method="post" >
-                    <input type="hidden" value="{{task.id}}" name="id"></iput>
-                    <button class="flex-no-shrink btn btn-sm btn-secondary">Borrar</button>
-                </form>
-                </div>
-             {% endfor %}
+            {% include 'tasks.html' %}
 
         </div>
     </div>

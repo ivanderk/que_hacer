@@ -1,0 +1,11 @@
+
+{% for task in tasks %}
+<div class="flex mb-4 items-center">
+  <p class="w-full text-grey-darkest  {{'line-through' if task.complete else ''}}">{{ task.name }}</p>
+  <a href="{{ url_for('complete', id=task.id) }}"  class="flex-no-shrink btn  btn-sm {{ 'btn-secondary' if task.complete else 'btn-primary' }}">{{ 'Deshacer' if task.complete else 'Hecho' }}</a>
+  <form action="{{ url_for('delete') }}" method="post" >
+      <input type="hidden" value="{{task.id}}" name="id"></iput>
+      <button class="flex-no-shrink btn btn-sm btn-secondary">Borrar</button>
+  </form>
+  </div>
+{% endfor %}
