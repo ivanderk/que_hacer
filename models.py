@@ -4,6 +4,7 @@ db = SQLAlchemy()
 
 def init_app(app):
     db.init_app(app)
+    return db
     
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

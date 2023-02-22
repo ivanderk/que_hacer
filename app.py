@@ -1,11 +1,11 @@
 # project/app.py
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from models import init_app
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
-db = SQLAlchemy(app)
-
+db = init_app(app)
 
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
