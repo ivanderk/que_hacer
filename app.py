@@ -8,41 +8,35 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
 db = init_app(app)
 
-# class Todo(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     text = db.Column(db.String(200))
-#     complete = db.Column(db.Boolean)
-
-
 app.app_context().push()
 db.create_all()
 
 
 @app.route('/')
 def index():
-    todos = Task.query.all()
-    return render_template('index.html', todos=todos)
+    tasks = Task.query.all()
+    return render_template('index.html', tasks=tasks)
 
 
 @app.route('/add', methods=['POST'])
 def add():
-    todo = Task(text=request.form['todo_text'], complete=False)
-    db.session.add(todo)
+    task = Task(name=request.form['task_name'], description=request.form['task_name'],complete=False)
+    db.session.add(task)
     db.session.commit()
     return redirect(url_for('index'))
 
 @app.route('/complete/<id>')
 def complete(id):
-    todo = Task.query.filter_by(id=int(id)).first()
-    todo.complete = not todo.complete
+    task = Task.query.filter_by(id=int(id)).first()
+    task.complete = not task.complete
     db.session.commit()
     return redirect(url_for('index'))
 
 @app.route('/delete', methods=['POST'])
 def delete():
     id = int(request.form['id'])
-    todo = Task.query.filter_by(id=id).first()
-    db.session.delete(todo)
+    task = Task.query.filter_by(id=id).first()
+    db.session.delete(task)
     db.session.commit()
     return redirect(url_for('index'))
 

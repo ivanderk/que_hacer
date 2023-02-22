@@ -19,7 +19,8 @@
             <h1 class="text-grey-darkest">¿Que hacer?</h1>
             <div class="flex mt-4">
                 <form action="{{ url_for('add') }}" method="post" >
-                    <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" name="todo_text" placeholder="Añadir Tarea">
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" name="task_name" placeholder="Añadir Tarea">
+                    <textarea name="task_description" placeholder="descripcion tarea" class="textarea textarea-bordered textarea-md w-full max-w-xs" ></textarea>
                     <button class="flex-no-shrink btn  btn-sm">Añadir</button>
                 </form>
             </div>
@@ -29,8 +30,8 @@
 
             {% for task in tasks %}
               <div class="flex mb-4 items-center">
-                <p class="w-full text-grey-darkest  {{'line-through' if todo.complete else ''}}">{{ todo.text }}</p>
-                <a href="{{ url_for('complete', id=task.id) }}"  class="flex-no-shrink btn  btn-sm {{ 'btn-secondary' if todo.complete else 'btn-primary' }}">{{ 'Deshacer' if todo.complete else 'Hecho' }}</a>
+                <p class="w-full text-grey-darkest  {{'line-through' if task.complete else ''}}">{{ task.name }}</p>
+                <a href="{{ url_for('complete', id=task.id) }}"  class="flex-no-shrink btn  btn-sm {{ 'btn-secondary' if task.complete else 'btn-primary' }}">{{ 'Deshacer' if task.complete else 'Hecho' }}</a>
                 <form action="{{ url_for('delete') }}" method="post" >
                     <input type="hidden" value="{{task.id}}" name="id"></iput>
                     <button class="flex-no-shrink btn btn-sm btn-secondary">Borrar</button>
