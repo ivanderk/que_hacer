@@ -8,6 +8,14 @@ from pytz import timezone
 
 
 def get_ical_text(event_name, description, begin_datetime, end_datetime):
+    """Generate the text bodyof an iCal/vCal event 
+
+    parameters:
+    event_name      -- Title of the event
+    description     -- Description of the event
+    begin_datetime  -- Date/time in which the event starts (set with timezone)
+    end_datetime    -- Date/time in which the event ends (set with timezone)
+"""
     if not all([event_name, begin_datetime, end_datetime]):
         return -1  # Error: empty parameters
    
