@@ -7,7 +7,8 @@ engine = create_engine('sqlite:///./instance/tasks.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 
-print(f"SQLAlchemy example using select and not the deprecated Query interface")
+#--------------------------------------------------------------------------
+print(f"SQLAlchemy example using SQL style select and not the deprecated Query interface")
 
 # Retrieve the user with the name "John" and ID 1
 john = session.execute(select(User).where((User.name == 'John') & (User.id == 1))).scalar_one()
@@ -17,8 +18,14 @@ tasks = session.execute(select(Task.name).join(Task.project).join(Project.users)
 
 # Print the task names
 for task in tasks:
-    print(task.name)
+    print(f"task: {task.name}")
+
+#--------------------------------------------------------------------------
+print(f"SQLAlchemy example more in tune with Flask ORM atterns")
+
+john = session.execute(select(User).filter_by(id=1)).scalar_one()
+tasks = john.projects[0].tasks
+
 # Print the task names
 for task in tasks:
     print(f"task: {task.name}")
-    
