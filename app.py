@@ -37,7 +37,10 @@ def tasks():
 
 @app.route('/add', methods=['POST'])
 def add():
-    task = Task(name=request.form['task_name'], description=request.form['task_name'], complete=False)
+    project_id = request.form['project_id']
+    task_name = request.form['task_name']
+    description=request.form['task_description']
+    task = Task(name=task_name, description = description, project_id=project_id, complete=False)
     db.session.add(task)
     db.session.commit()
     return redirect(url_for('index'))
