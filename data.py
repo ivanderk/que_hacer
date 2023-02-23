@@ -19,3 +19,23 @@ def get_tasks_by_project(project_id):
         return project.tasks
     else:
         return []
+    
+def create_task(project_id, task_name, description):
+    task = Task(name=task_name, description=description, project_id=project_id, complete=False)
+    db.session.add(task)
+    db.session.commit()
+    return task
+
+def find_task_by_id(id):
+    task = Task.query.filter_by(id=int(id)).first()
+    return task
+
+def change_task(task, **props):
+    for key in props.keys():
+        setattr(task, key, props[key])
+        
+    db.session.commit()
+    
+def delete_task(task):
+    db.session.delete(task)
+    db.session.commit()

@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import sys
 from models import Task, Project, init_app
-from services import getProjects, getTasks
+from data import get_projects_by_user, get_tasks_by_project, create_task, find_task_by_id, change_task, delete_task
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
@@ -17,55 +17,49 @@ db.create_all()
 # 2 Jane
 active_user_id = 1
 
+
 @app.route('/')
 def index():
-    projects = getProjects(active_user_id)
+    projects = get_projects_by_user(active_user_id)
     if len(projects) > 0:
-        tasks = getTasks(projects[0].id)
+        tasks = get_tasks_by_project(projects[0].id)
         return render_template('index.html', tasks=tasks, projects=projects)
     else:
-        return render_template('error.html', error_message="No esta asignado a un proyecto. Por favor, avisa el administrador")
-    # projects = Project.query.all()
-    # return render_template('index.html', tasks=tasks, projects=projects)
-    
+        return render_template('error.html',
+                               error_message="No esta asignado a un proyecto. Por favor, avisa el administrador")
+  
 @app.route('/tasks')
 def tasks():
     projec_id = request.args.get("project_id")
     return render_tasks(projec_id)
 
 def render_tasks(project_id):
-    tasks = getTasks(project_id)
+    tasks = get_tasks_by_project(project_id)
     return render_template('tasks.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
 def add():
     project_id = request.form['project_id']
     task_name = request.form['task_name']
-    description=request.form['task_description']
-    task = Task(name=task_name, description = description, project_id=project_id, complete=False)
-    db.session.add(task)
-    db.session.commit()
+    description = request.form['task_description']
+    create_task(project_id, task_name, description)
     return render_tasks(project_id)
-    #return redirect(url_for('index'))
 
 @app.route('/complete/<id>')
 def complete(id):
-    task = Task.query.filter_by(id=int(id)).first()
+    task = find_task_by_id(id)
     project_id = task.project_id
-    task.complete = not task.complete
-    db.session.commit()
+    newcomplete = not task.complete
+    change_task(task, complete=newcomplete)
     return render_tasks(project_id)
-    #return redirect(url_for('index'))
 
 @app.route('/delete', methods=['POST'])
 def delete():
     id = int(request.form['id'])
-    task = Task.query.filter_by(id=id).first()
+    task = find_task_by_id(id)
     project_id = task.project_id
-    db.session.delete(task)
-    db.session.commit()
+    delete_task(task)
     return render_tasks(project_id)
-    #return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
