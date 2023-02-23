@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@1.8.3/dist/tailwind.min.css" -->
+    <script src="https://unpkg.com/htmx.org@1.8.5"
+            integrity="sha384-7aHh9lqPYGYZ7sTHvzP1t3BAfLhYSTy9ArHdP3Xsr9/3TlGurYgcPBoFmXX2TX/w"
+            crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.50.0/dist/full.css" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>¿Que hacer?</title>
+</head>
+<body class="bg-gray-100">
+
+<div class="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans">
+	<div class="bg-white rounded shadow p-6 m-4 w-full lg:w-3/4 lg:max-w-lg">
+        <div class="mb-4 ">
+            <h1 class="text-grey-darkest">Que hacer?</h1>
+            <div class="flex mt-4">
+               
+                <div class="alert alert-error shadow-lg">
+                    <div>
+                      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                      <span>{{error_message}}</span>
+                    </div>
+                  </div>
+                
+            </div>
+        </div>
+
+        <div id="tasks-container">
+
+            {% include 'tasks.html' %}
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

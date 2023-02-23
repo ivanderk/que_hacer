@@ -2,10 +2,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import sys
-from models import Task, init_app
+from models import Task, Project, init_app
+from services import getProjects, getTasks
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
 db = init_app(app)
 
 app.app_context().push()
@@ -18,9 +19,15 @@ active_user_id = 1
 
 @app.route('/')
 def index():
-    tasks = Task.query.all()
-    return render_template('index.html', tasks=tasks)
-
+    projects = getProjects(active_user_id)
+    if len(projects) > 0:
+        tasks = getTasks(projects[0].id)
+        return render_template('index.html', tasks=tasks, projects=projects)
+    else:
+        return render_template('error.html', error_message="No esta asignado a un proyecto. Por favor, avisa el administrador")
+    # projects = Project.query.all()
+    # return render_template('index.html', tasks=tasks, projects=projects)
+    
 
 @app.route('/add', methods=['POST'])
 def add():
@@ -32,7 +39,7 @@ def add():
 @app.route('/complete/<id>')
 def complete(id):
     task = Task.query.filter_by(id=int(id)).first()
-    task.complete = not todo.complete
+    task.complete = not task.complete
     db.session.commit()
     return redirect(url_for('index'))
 
