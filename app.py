@@ -31,8 +31,10 @@ def index():
 @app.route('/tasks')
 def tasks():
     projec_id = request.args.get("project_id")
-    tasks = getTasks(projec_id)
-   
+    return render_tasks(projec_id)
+
+def render_tasks(project_id):
+    tasks = getTasks(project_id)
     return render_template('tasks.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
@@ -43,22 +45,27 @@ def add():
     task = Task(name=task_name, description = description, project_id=project_id, complete=False)
     db.session.add(task)
     db.session.commit()
-    return redirect(url_for('index'))
+    return render_tasks(project_id)
+    #return redirect(url_for('index'))
 
 @app.route('/complete/<id>')
 def complete(id):
     task = Task.query.filter_by(id=int(id)).first()
+    project_id = task.project_id
     task.complete = not task.complete
     db.session.commit()
-    return redirect(url_for('index'))
+    return render_tasks(project_id)
+    #return redirect(url_for('index'))
 
 @app.route('/delete', methods=['POST'])
 def delete():
     id = int(request.form['id'])
     task = Task.query.filter_by(id=id).first()
+    project_id = task.project_id
     db.session.delete(task)
     db.session.commit()
-    return redirect(url_for('index'))
+    return render_tasks(project_id)
+    #return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
