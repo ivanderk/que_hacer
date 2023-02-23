@@ -1,14 +1,12 @@
 from models import db, User, Project, Task
 
-# https://flask-sqlalchemy.palletsprojects.com/en/3.0.x/queries/
-# https://docs.sqlalchemy.org/en/20/orm/queryguide/index.html
-
+# DEPRECATED - NO USAR!!!!
 
 def get_user_by_id(user_id):
-    return db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one()
+    return User.query.get(user_id)
 
 def get_project_by_id(project_id):
-    return db.session.execute(db.select(Project).filter_by(id=project_id)).scalar_one()
+    return Project.query.get(project_id)
 
 def get_projects_by_user(user_id):
     user = get_user_by_id(user_id)
@@ -30,8 +28,8 @@ def create_task(project_id, task_name, description):
     db.session.commit()
     return task
 
-def find_task_by_id(task_id):
-    task = db.session.execute(db.select(Task).filter_by(id=task_id)).scalar_one()
+def find_task_by_id(id):
+    task = Task.query.filter_by(id=int(id)).first()
     return task
 
 def change_task(task, **props):
