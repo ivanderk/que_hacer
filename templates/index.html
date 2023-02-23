@@ -19,17 +19,17 @@
             <h1 class="text-grey-darkest">Que hacer?</h1>
             <div class="flex mt-4">
             
-                <form hx-get="/tasks" hx-trigger="change" hx-target="#tasks-container">
+                <form action="{{ url_for('add') }}" method="post" >
                   <div class="form-group">
                     <label for="project-select">Elegir proyecto:</label>
-                    <select id="project-select" name="project_id" class="select select-bordered w-full max-w-xs">
+                    <select id="project-select" hx-get="/tasks" hx-trigger="change" hx-target="#tasks-container" name="project_id" class="select select-bordered w-full max-w-xs">
                       {% for project in projects %}
                       <option value="{{ project.id }}">{{ project.name }}</option>
                       {% endfor %}
                     </select>
                   </div>
-
-                <form action="{{ url_for('add') }}" method="post" >
+                   
+                
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-grey-darker" name="task_name" placeholder="Añadir Tarea">
                     <textarea name="task_description" placeholder="descripcion tarea" class="textarea textarea-bordered textarea-md w-full max-w-xs" ></textarea>
                     <button class="flex-no-shrink btn  btn-sm">Añadir</button>

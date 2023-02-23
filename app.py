@@ -15,7 +15,7 @@ db.create_all()
 # id name
 # 1 John
 # 2 Jane
-active_user_id = 1 
+active_user_id = 1
 
 @app.route('/')
 def index():
@@ -28,6 +28,12 @@ def index():
     # projects = Project.query.all()
     # return render_template('index.html', tasks=tasks, projects=projects)
     
+@app.route('/tasks')
+def tasks():
+    projec_id = request.args.get("project_id")
+    tasks = getTasks(projec_id)
+   
+    return render_template('tasks.html', tasks=tasks)
 
 @app.route('/add', methods=['POST'])
 def add():
