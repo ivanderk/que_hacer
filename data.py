@@ -5,16 +5,16 @@ from models import db, User, Project, Task
 # https://docs.sqlalchemy.org/en/20/orm/queryguide/index.html
 
 
-def get_user_by_id(user_id):
-    return db.session.execute(db.select(User).filter_by(id=user_id)).scalar_one()
+def get_user_by_name(user_name):
+    return db.session.execute(db.select(User).filter_by(name=user_name)).scalar_one()
 
 
 def get_project_by_id(project_id):
     return db.session.execute(db.select(Project).filter_by(id=project_id)).scalar_one()
 
 
-def get_projects_by_user(user_id):
-    user = get_user_by_id(user_id)
+def get_projects_by_user(user_name):
+    user = get_user_by_name(user_name)
     if user:
         return user.projects
     else:

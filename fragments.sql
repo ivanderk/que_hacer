@@ -1,7 +1,12 @@
--- Insert sample users
-INSERT INTO "user" (id, name)
-VALUES (1, 'John'),
-       (2, 'Jane');
+-- Insert sample users. Both have password 'hola' 
+INSERT INTO "user" (id, name, password_hash, password_salt)
+VALUES (1, 'john', '$2b$12$gIcSbXQrWqMHTFhbcNOguOQhSNDDq.nQpuX25Fgfy4HKrrIScnaWm', '$2b$12$gIcSbXQrWqMHTFhbcNOguO'),
+       (2, 'jane', '$2b$12$NRjQ1na2/7ikf2SFhgqNrOE8cUQOI.JiFWy8WUQepghNZEPmbAT/m', '$2b$12$NRjQ1na2/7ikf2SFhgqNrO');
+
+-- id	name	password_hash	                                                password_salt
+-- 1	john	$2b$12$gIcSbXQrWqMHTFhbcNOguOQhSNDDq.nQpuX25Fgfy4HKrrIScnaWm	$2b$12$gIcSbXQrWqMHTFhbcNOguO
+-- 2	jane	$2b$12$NRjQ1na2/7ikf2SFhgqNrOE8cUQOI.JiFWy8WUQepghNZEPmbAT/m	$2b$12$NRjQ1na2/7ikf2SFhgqNrO
+
 
 -- Insert sample projects
 INSERT INTO project (id, name)
@@ -31,4 +36,4 @@ FROM "user" u
 JOIN user_project up ON u.id = up.user_id
 JOIN project p ON up.project_id = p.id
 JOIN task t ON p.id = t.project_id
-WHERE u.name = 'John'
+WHERE u.name = 'john'
