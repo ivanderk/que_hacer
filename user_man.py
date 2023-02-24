@@ -1,8 +1,9 @@
 import getpass
 from models import User
+from data import find_user_by_name
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, select
 
 # Set up the database connection (NO ES IGUAL A FLASK. NO ESTAMOS EN UN PROCESO DE FLASK AHORA!!!!)
 engine = create_engine('sqlite:///./instance/tasks.db')
@@ -33,9 +34,10 @@ def update_password(username, password):
     # Retrieve the user from the database
     login = username.lower()
     session = Session()
-    user = session.query(User).filter_by(name=login).first()
+    user = session.execute(select(User).filter_by(name=login)).scalar_one_or_none()
 
     if user:
+        
         # Hash the new password using the User model's set_password method
         user.set_password(password)
 
@@ -48,11 +50,11 @@ def update_password(username, password):
 if __name__ == '__main__':
     action = input('What would you like to do? (create/update) ')
 
-    if action == 'create':
+    if action in 'create':
         username = input('Enter username: ')
         password = getpass.getpass('Enter password: ')
         create_user(username, password)
-    elif action == 'update':
+    elif action in 'update':
         username = input('Enter username: ')
         password = getpass.getpass('Enter new password: ')
         update_password(username, password)

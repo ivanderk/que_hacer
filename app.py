@@ -1,7 +1,7 @@
 # project/app.py
 from flask import Flask, render_template, request, redirect, session, url_for
 from models import init_app, User
-from data import get_projects_by_user, get_tasks_by_project, create_task, find_task_by_id, change_task, delete_task
+from data import find_user_by_name, get_projects_by_user, get_tasks_by_project, create_task, find_task_by_id, change_task, delete_task
 from middleware import authenticate_handler
 
 app = Flask(__name__)
@@ -32,8 +32,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        user = User.query.filter_by(name=username).first()
-
+        user = find_user_by_name(username)
+        
         if user is None or not user.check_password(password):
             error = 'Invalid username or password'
         else:

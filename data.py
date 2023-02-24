@@ -6,20 +6,21 @@ from models import db, User, Project, Task
 
 
 def get_user_by_name(user_name):
+    "Searched for User from db by name. Must exist or generates exception"
     return db.session.execute(db.select(User).filter_by(name=user_name)).scalar_one()
-
-
+   
+def find_user_by_name(user_name):
+    "Searched for User from db by name. Needs not to exist"
+    return db.session.execute(db.select(User).filter_by(name=user_name)).scalar_one_or_none()
+ 
 def get_project_by_id(project_id):
     return db.session.execute(db.select(Project).filter_by(id=project_id)).scalar_one()
 
-
 def get_projects_by_user(user_name):
+    "Get user (must exist) associated projects"
     user = get_user_by_name(user_name)
-    if user:
-        return user.projects
-    else:
-        return []
-
+    return user.projects
+    
 
 def get_tasks_by_project(project_id):
     project = get_project_by_id(project_id)
