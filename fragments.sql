@@ -5,9 +5,9 @@ VALUES (1, 'John'),
 
 -- Insert sample projects
 INSERT INTO project (id, name)
-VALUES (1, 'Project 1'),
-       (2, 'Project 2'),
-       (3, 'Project 3');
+VALUES (1, 'Asociación de vecinos'),
+       (2, 'Club de deporte'),
+       (3, 'Pilates club');
 
 -- Associate projects with users
 INSERT INTO user_project (user_id, project_id)
@@ -18,11 +18,11 @@ VALUES (1, 1),
 
 -- Insert sample tasks
 INSERT INTO task (id, name, complete, project_id)
-VALUES (1, 'Task 1', false, 1),
-       (2, 'Task 2', true, 1),
-       (3, 'Task 3', false, 2),
-       (4, 'Task 4', false, 2),
-       (5, 'Task 5', true, 3);
+VALUES (1, 'Reconstruir piscina', false, 1),
+       (2, 'Limpieza de aparcamiento', true, 1),
+       (3, 'Event Madrid Agosto 2023', false, 2),
+       (4, 'Publicidad por Instragram', false, 2),
+       (5, 'Cambiar sala', true, 3);
 
 -- Get all projects with tasks for a particular user
 
