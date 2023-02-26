@@ -14,7 +14,7 @@ print(f"SQLAlchemy example using SQL style select and not the deprecated Query i
 john = session.execute(select(User).where((User.name == 'john') & (User.id == 1))).scalar_one()
 
 # Retrieve all tasks for a project with ID 1 and associated with John
-tasks = session.execute(select(Task.name).join(Task.project).join(Project.users).where((Project.id == 1) & (User.id == john.id)))
+tasks = session.execute(select(Task).join(Task.project).join(Project.users).where((Project.id == 1) & (User.id == john.id))).scalars()
 
 # Print the task names
 for task in tasks:
