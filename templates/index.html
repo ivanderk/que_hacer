@@ -33,7 +33,7 @@
                 <form>
                   <div class="form-group">
                     <label for="project-select">Elegir proyecto:</label>
-                    <select id="project-select" hx-get="/tasks" hx-trigger="change" hx-target="#tasks-container" name="project_id" class="select select-bordered w-full max-w-xs">
+                    <select id="project-select" hx-get="{{ url_for('tasks') }}" hx-trigger="change" hx-target="#tasks-container" name="project_id" class="select select-bordered w-full max-w-xs">
                       {% for project in projects %}
                       <option value="{{ project.id }}">{{ project.name }}</option>
                       {% endfor %}
