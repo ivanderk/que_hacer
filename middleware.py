@@ -1,9 +1,11 @@
-from flask import abort, request, redirect, url_for, session
+from flask import abort, render_template, request, redirect, url_for, session
 
 def authenticate_handler(response):
     "Middleware to enforce redirect to login if not authenticated (not the 'static' route)"
     if not request.endpoint:
-       abort(404)
+        #abort(404)
+        return render_template('error.html', error_message="Page not found", error_description="This isn't the page you are looking for....")
+  
    
     if request.endpoint in 'static':
         return response

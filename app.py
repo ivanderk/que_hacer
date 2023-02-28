@@ -63,7 +63,7 @@ def index():
         return render_template('index.html', tasks=projects[0].tasks, projects=projects)
     else:
         return render_template('error.html',
-                               error_message="No esta asignado a un proyecto. Por favor, avisa el administrador")
+                               error_message="No esta asignado a un proyecto", error_description="Por favor, avisa el administrador")
 
 
 @app.route('/tasks')
@@ -101,6 +101,10 @@ def delete():
     delete_task(task)
     return render_tasks(project_id)
 
+@app.route('/page-not-found')
+def page_not_found():
+    return render_template('error.html', error_message="Page not found", error_description="This isn't the page you are looking for....")
+  
 
 if __name__ == '__main__':
     app.run(debug=True)
